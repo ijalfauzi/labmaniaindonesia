@@ -7,14 +7,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'labmania-blue': '#2f58a5',
-        'labmania-yellow': '#fee600',
-        'labmania-yellow-light': '#fcf839',
-        'labmania-white': '#fefefe',
-        'labmania-accent': '#004ed5',
+        'lm-blue': '#2f58a5',
+        'lm-yellow': '#fee600',
+        'lm-yellow-light': '#fcf839',
+        'lm-white': '#fefefe',
+        'lm-accent': '#004ed5',
       },
       fontFamily: {
-        'sans': ['Poppins', 'Montserrat', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
       },
     },
   },
