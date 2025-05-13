@@ -14,13 +14,13 @@ $services = array(
     array(
         'title' => 'TRAINING DAN SERTIFIKASI BNSP',
         'description' => 'Program sertifikasi resmi BNSP untuk meningkatkan kompetensi di bidang laboratorium',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/training-sertifikasi.jpg',
+        'image' => get_stylesheet_directory_uri() . '/assets/images/training-sertifikasi-bnsp.webp',
         'url' => home_url('/layanan/sertifikasi-bnsp'),
     ),
     array(
         'title' => 'WORKSHOP',
         'description' => 'Workshop praktis untuk mengembangkan keterampilan laboratorium',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/workshop.jpg',
+        'image' => get_stylesheet_directory_uri() . '/assets/images/workshop.webp',
         'url' => home_url('/layanan/workshop'),
     ),
     array(
@@ -44,13 +44,13 @@ $services = array(
     array(
         'title' => 'TRAINING DARING',
         'description' => 'Pelatihan virtual yang dapat diakses dari mana saja',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/training-daring.jpg',
+        'image' => get_stylesheet_directory_uri() . '/assets/images/training-daring.webp',
         'url' => home_url('/layanan/training-daring'),
     ),
     array(
         'title' => 'E-COURSE',
         'description' => 'Pembelajaran mandiri melalui platform digital dengan akses fleksibel',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/e-course.jpg',
+        'image' => get_stylesheet_directory_uri() . '/assets/images/ecourse.webp',
         'url' => home_url('/layanan/e-course'),
     ),
     array(
