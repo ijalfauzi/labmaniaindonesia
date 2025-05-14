@@ -41,7 +41,7 @@ wp-content/uploads/
 *.scssc
 
 # Optional: ignore compiled CSS if it's auto-generated
-style.css
+# style.css
 
 # Lock files (optional, depending on whether you want them versioned)
 # yarn.lock
