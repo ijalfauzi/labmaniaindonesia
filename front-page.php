@@ -38,6 +38,15 @@ get_header();
         echo '<!-- Why Labmania Section template not found -->';
     }
     
+    // Include Statistics Section - Now positioned after Why Labmania
+    $statistics_path = get_stylesheet_directory() . '/template-parts/homepage/statistics.php';
+    if (file_exists($statistics_path)) {
+        include($statistics_path);
+    } else {
+        // Fallback if the template doesn't exist yet
+        echo '<!-- Statistics Section template not found -->';
+    }
+    
     // Include Products & Services Section
     $products_services_path = get_stylesheet_directory() . '/template-parts/homepage/products-services.php';
     if (file_exists($products_services_path)) {
