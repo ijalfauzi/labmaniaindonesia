@@ -1,10 +1,10 @@
 <?php
 /**
  * Products and Services Section Template for Homepage
- * - Enhanced accessibility with ARIA labels and better focus states
- * - Improved performance with width/height attributes and WebP support
- * - Better UX with visual indicators and optimized touch targets
- * - Maintained Tailwind utility-class approach
+ * - Social Media Inspired Layout with improved UX
+ * - Optimized for horizontal/landscape images
+ * - More compact on mobile to reduce scrolling
+ * - Hidden descriptions on mobile for cleaner appearance
  * 
  * @package Labmania_Indonesia
  */
@@ -77,78 +77,90 @@ $cta_buttons = array(
 
 /**
  * Helper function to get WebP version of image if exists, fallback to original
- * This is a simplified implementation - in production, consider using WordPress's built-in 
- * image handling functions or a dedicated responsive images solution.
  */
 function get_webp_image_url($image_url) {
     $webp_url = str_replace(['.jpg', '.jpeg', '.png'], '.webp', $image_url);
-    // In a real implementation, we would check if the WebP file exists
-    // For this example, we'll assume the WebP version exists
     return $webp_url;
 }
 ?>
 
-<section class="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+<section class="bg-gray-50 py-8 sm:py-12 md:py-16 px-3 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
-        <!-- Section Heading -->
-        <div class="text-center mb-10 sm:mb-12 md:mb-16">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-lm-blue text-center leading-tight">
-                Produk dan Layanan Kami
+        <!-- Section Heading - Styled like why-labmania.php -->
+        <div class="text-center mb-5 sm:mb-8">
+            <!-- Badge with improved mobile visibility -->
+            <div class="inline-block bg-blue-100 text-lm-blue text-xs leading-relaxed sm:text-sm font-medium px-4 py-1.5 rounded-full uppercase tracking-wider mb-3 sm:mb-4">
+                SOLUSI PELATIHAN & PERALATAN
+            </div>
+            
+            <!-- Main heading with better mobile spacing and font sizing -->
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-lm-blue text-center leading-tight px-2">
+                Layanan Unggulan Labmania
             </h2>
-            <!-- Yellow underline -->
-            <div class="h-1 bg-lm-yellow w-24 sm:w-32 md:w-48 mx-auto mt-3 sm:mt-4"></div>
+            
+            <!-- Yellow underline with better proportions on mobile -->
+            <div class="h-1 bg-lm-yellow w-24 sm:w-32 md:w-48 mx-auto mt-3"></div>
         </div>
         
-        <!-- Services Grid - Responsive with 2 columns on mobile, 4 on larger screens -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-6 mb-8 sm:mb-10">
+        <!-- Modern Card Grid with Responsive Layout - More compact on mobile -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 mb-8">
             <?php foreach ($services as $index => $service) : ?>
                 <a href="<?php echo esc_url($service['url']); ?>" 
-                   class="relative group overflow-hidden rounded-lg aspect-square focus:outline-none focus:ring-2 focus:ring-lm-yellow focus:ring-offset-2 transition-all duration-300 hover:shadow-lg" 
+                   class="block relative rounded-lg sm:rounded-xl overflow-hidden aspect-[3/2] sm:aspect-[16/9] group focus:outline-none focus:ring-2 focus:ring-lm-yellow focus:ring-offset-2 shadow-sm hover:shadow-md transition-all duration-300" 
                    aria-label="<?php echo esc_attr($service['title'] . ' - ' . $service['description']); ?>">
-                   
-                    <!-- Background Image with Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-b from-lm-blue/60 to-lm-blue/90 group-hover:from-lm-accent/60 group-hover:to-lm-accent/90 transition-colors duration-300">
-                        <!-- Image as background with WebP support and dimensions for CLS -->
-                        <picture>
-                            <source srcset="<?php echo esc_url(get_webp_image_url($service['image'])); ?>" type="image/webp">
-                            <img 
-                                src="<?php echo esc_url($service['image']); ?>" 
-                                alt="" 
-                                width="600" 
-                                height="600"
-                                class="w-full h-full object-cover mix-blend-overlay opacity-90 group-hover:scale-110 transition-transform duration-500"
-                                loading="<?php echo ($index < 4) ? 'eager' : 'lazy'; ?>"
-                            >
-                        </picture>
-                    </div>
                     
-                    <!-- Text Overlay - Centered with Shadow for Readability -->
-                    <div class="absolute inset-0 flex items-center justify-center p-4 text-center">
-                        <h3 class="text-white text-lg sm:text-xl font-bold leading-tight drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300">
+                    <!-- Card with modern styling -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+                    
+                    <!-- Main image -->
+                    <picture class="absolute inset-0 w-full h-full bg-gray-200">
+                        <source srcset="<?php echo esc_url(get_webp_image_url($service['image'])); ?>" type="image/webp">
+                        <img 
+                            src="<?php echo esc_url($service['image']); ?>" 
+                            alt="" 
+                            width="800" 
+                            height="450"
+                            class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                            loading="<?php echo ($index < 6) ? 'eager' : 'lazy'; ?>"
+                        >
+                    </picture>
+                    
+                    <!-- Color Overlay for Pop Effect -->
+                    <div class="absolute inset-0 bg-lm-blue/20 mix-blend-overlay group-hover:bg-lm-accent/30 transition-colors duration-300"></div>
+                    
+                    <!-- Service Title with modern style - More compact on mobile -->
+                    <div class="absolute bottom-0 left-0 right-0 p-2 sm:p-3 z-20">
+                        <!-- Title with Pop Text Effect - Smaller on mobile -->
+                        <h3 class="text-white text-xs sm:text-sm md:text-base font-bold tracking-tight drop-shadow-lg">
                             <?php echo esc_html($service['title']); ?>
                         </h3>
+                        
+                        <!-- Description - Completely hidden on mobile, only shows on hover on larger screens -->
+                        <p class="text-white/90 text-xs mt-1 max-h-0 overflow-hidden hidden sm:block sm:group-hover:max-h-16 transition-all duration-300 ease-in-out">
+                            <?php echo esc_html($service['description']); ?>
+                        </p>
                     </div>
                     
-                    <!-- Visual indicator for clickable items -->
-                    <div class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+                    <!-- "View" Button - Mobile optimized placement -->
+                    <div class="absolute top-2 right-2 sm:top-3 sm:right-3 z-20">
+                        <div class="bg-lm-yellow/90 text-lm-blue rounded-full font-bold text-[10px] sm:text-xs py-0.5 px-2 sm:py-1 sm:px-3 shadow-md backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-1 group-hover:translate-y-0">
+                            Lihat
+                        </div>
                     </div>
                 </a>
             <?php endforeach; ?>
         </div>
         
-        <!-- CTA Buttons - Side by side on desktop, stacked on mobile with enhanced touch targets -->
-        <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 px-4">
+        <!-- CTA Buttons in Modern Style -->
+        <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6">
             <?php foreach ($cta_buttons as $button) : ?>
                 <a href="<?php echo esc_url($button['url']); ?>" 
-                   class="inline-flex items-center justify-center px-6 py-4 sm:py-3 bg-lm-yellow text-lm-blue text-sm sm:text-base font-bold rounded-md hover:bg-lm-yellow-light transition-all duration-300 shadow-sm hover:shadow-md text-center focus:outline-none focus:ring-2 focus:ring-lm-yellow focus:ring-offset-2"
+                   class="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-lm-blue text-white text-sm font-medium rounded-md hover:bg-lm-accent transition-colors duration-300 shadow-sm"
                    aria-label="<?php echo esc_attr($button['description']); ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
-                    <?php echo isset($button['text']) ? esc_html($button['text']) : esc_html($button['title']); ?>
+                    <?php echo esc_html($button['text']); ?>
                 </a>
             <?php endforeach; ?>
         </div>
