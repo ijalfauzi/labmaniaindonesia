@@ -19,7 +19,7 @@ module.exports = {
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3000,
-      proxy: 'http://wordpress.test',
+      proxy: 'http://labmaniaindonesia.test',
       files: [
         './**/*.php',
         './dist/*.js',
