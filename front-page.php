@@ -55,6 +55,15 @@ get_header();
         // Fallback if the template doesn't exist
         echo '<!-- Products & Services section template not found -->';
     }
+    
+    // Include Articles Section
+    $articles_path = get_stylesheet_directory() . '/template-parts/homepage/articles.php';
+    if (file_exists($articles_path)) {
+        include($articles_path);
+    } else {
+        // Fallback if the template doesn't exist
+        echo '<!-- Articles section template not found -->';
+    }
     ?>
 </main>
 
