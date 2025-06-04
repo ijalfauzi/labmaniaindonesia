@@ -1,45 +1,24 @@
 <?php
 /**
  * Articles Section Template for Homepage
- * - Simple list display of latest 3 articles
+ * - Dynamic query of latest 3 blog posts
  * - Mobile-first design with clean typography
  * - Consistent styling with product-services section
  * 
  * @package Labmania_Indonesia
  */
 
-// Dummy article data - using just 3 articles
-$articles = array(
-    array(
-        'title' => 'Audit Internal Laboratorium Sesuai SKKNI',
-        'excerpt' => 'Bagaimana melakukan audit internal di laboratorium sesuai Standar Kompetensi Kerja Nasional Indonesia (SKKNI)? Audit internal laboratorium adalah bagian penting dari elemen Check pada proses...',
-        'date' => 'April 25, 2025',
-        'author' => 'Admin Labmania',
-        'category' => 'Audit',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/dummy/article-1.jpg',
-        'url' => home_url('/blog/audit-internal-laboratorium-sesuai-skkni'),
-    ),
-    array(
-        'title' => 'Sabun Terbaik untuk Mencuci Glassware Laboratorium',
-        'excerpt' => 'Sedang mencari sabun pembersih glassware di laboratorium? Menjaga kebersihan glassware laboratorium bukan sekadar soal estetika, ini adalah syarat mutlak untuk menjamin integritas hasil pengujian...',
-        'date' => 'April 20, 2025',
-        'author' => 'Admin Labmania',
-        'category' => 'Peralatan',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/dummy/article-2.jpg',
-        'url' => home_url('/blog/sabun-terbaik-untuk-mencuci-glassware-laboratorium'),
-    ),
-    array(
-        'title' => 'Optimalisasi Karir Laboratorium',
-        'excerpt' => 'Pengembangan keterampilan adalah kunci utama untuk meraih kesuksesan dalam karir laboratorium. Banyak personel laboratorium merasa perlu terus mengikuti perkembangan, dan memiliki keterampilan relevan dapat...',
-        'date' => 'April 18, 2025',
-        'author' => 'Admin Labmania',
-        'category' => 'Karir',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/dummy/article-3.jpg',
-        'url' => home_url('/blog/optimalisasi-karir-laboratorium'),
-    ),
-);
+// Query latest 3 blog posts
+$articles_query = new WP_Query(array(
+    'post_type' => 'post',
+    'posts_per_page' => 3,
+    'post_status' => 'publish',
+    'orderby' => 'date',
+    'order' => 'DESC'
+));
 ?>
 
+<?php if ($articles_query->have_posts()) : ?>
 <section class="py-10 sm:py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
     <div class="max-w-7xl mx-auto">
         <!-- Section heading -->
@@ -55,47 +34,86 @@ $articles = array(
         
         <!-- Articles Grid - Simple 3 column on desktop, stacked on mobile -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
-            <?php foreach ($articles as $index => $article) : ?>
+            <?php 
+            $post_index = 0;
+            while ($articles_query->have_posts()) : 
+                $articles_query->the_post();
+                
+                // Get post data
+                $post_id = get_the_ID();
+                $post_title = get_the_title();
+                $post_excerpt = get_the_excerpt();
+                $post_date = get_the_date('F j, Y');
+                $post_author = get_the_author();
+                $post_url = get_permalink();
+                
+                // Get featured image
+                $featured_image = '';
+                if (has_post_thumbnail()) {
+                    $featured_image = get_the_post_thumbnail_url($post_id, 'medium_large');
+                } else {
+                    // Fallback placeholder image
+                    $featured_image = get_stylesheet_directory_uri() . '/assets/images/placeholder-article.jpg';
+                }
+                
+                // Get primary category
+                $categories = get_the_category();
+                $primary_category = !empty($categories) ? $categories[0]->name : 'Blog';
+                
+                // Limit excerpt length if it's too long
+                if (strlen($post_excerpt) > 150) {
+                    $post_excerpt = substr($post_excerpt, 0, 150) . '...';
+                }
+                
+                // If no excerpt, create one from content
+                if (empty($post_excerpt)) {
+                    $post_excerpt = wp_trim_words(get_the_content(), 25, '...');
+                }
+            ?>
                 <!-- Article Card -->
                 <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
                     <!-- Image container with fixed aspect ratio -->
                     <div class="relative aspect-[16/9] bg-gray-200 overflow-hidden">
                         <img 
-                            src="<?php echo esc_url($article['image']); ?>" 
-                            alt="<?php echo esc_attr($article['title']); ?>"
+                            src="<?php echo esc_url($featured_image); ?>" 
+                            alt="<?php echo esc_attr($post_title); ?>"
                             class="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
                             width="640"
                             height="360"
-                            loading="<?php echo ($index === 0) ? 'eager' : 'lazy'; ?>"
+                            loading="<?php echo ($post_index === 0) ? 'eager' : 'lazy'; ?>"
                         >
                         
                         <!-- Category badge - Styled like the "Lihat" button from products-services.php -->
                         <div class="absolute top-3 right-3 bg-lm-yellow/90 text-lm-blue rounded-full font-bold text-xs py-1 px-3 shadow-md backdrop-blur-sm">
-                            <?php echo esc_html($article['category']); ?>
+                            <?php echo esc_html($primary_category); ?>
                         </div>
                     </div>
                     
                     <!-- Content container -->
                     <div class="p-5 flex flex-col flex-grow">
-                        <!-- Date -->
+                        <!-- Date and Author -->
                         <div class="text-xs sm:text-sm text-gray-500 mb-2">
-                            <?php echo esc_html($article['date']); ?>
+                            <?php echo esc_html($post_date); ?>
+                            <?php if ($post_author) : ?>
+                                <span class="mx-1">•</span>
+                                <span><?php echo esc_html($post_author); ?></span>
+                            <?php endif; ?>
                         </div>
                         
                         <!-- Title with hover effect -->
                         <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3 leading-tight line-clamp-2">
-                            <a href="<?php echo esc_url($article['url']); ?>" class="hover:text-lm-blue transition-colors duration-300">
-                                <?php echo esc_html($article['title']); ?>
+                            <a href="<?php echo esc_url($post_url); ?>" class="hover:text-lm-blue transition-colors duration-300">
+                                <?php echo esc_html($post_title); ?>
                             </a>
                         </h3>
                         
                         <!-- Excerpt -->
                         <p class="text-gray-600 text-sm line-clamp-3 mb-4">
-                            <?php echo esc_html($article['excerpt']); ?>
+                            <?php echo esc_html($post_excerpt); ?>
                         </p>
                         
                         <!-- Read more link -->
-                        <a href="<?php echo esc_url($article['url']); ?>" class="inline-flex items-center text-lm-blue font-medium hover:text-blue-700 transition-colors duration-300 mt-auto text-sm">
+                        <a href="<?php echo esc_url($post_url); ?>" class="inline-flex items-center text-lm-blue font-medium hover:text-blue-700 transition-colors duration-300 mt-auto text-sm">
                             Baca Lengkapnya
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -103,7 +121,11 @@ $articles = array(
                         </a>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php 
+                $post_index++;
+            endwhile; 
+            wp_reset_postdata();
+            ?>
         </div>
         
         <!-- View all articles button -->
@@ -117,6 +139,7 @@ $articles = array(
         </div>
     </div>
 </section>
+<?php endif; ?>
 
 <!-- Add CSS for line clamp if not available in your Tailwind setup -->
 <style>
