@@ -7,11 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'lm-blue': '#2f58a5',
-        'lm-yellow': '#fee600',
-        'lm-yellow-light': '#fcf839',
+        'lm-blue': '#004ed5',
+        'lm-yellow': '#fcf839',
+        'lm-yellow-light': '#fee600',
         'lm-white': '#fefefe',
-        'lm-accent': '#004ed5',
+        'lm-accent': '#2f58a5',
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
