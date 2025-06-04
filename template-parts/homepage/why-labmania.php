@@ -102,7 +102,7 @@
 
         <!-- CTA Button with better mobile touch target -->
         <div class="text-center">
-            <a href="<?php echo esc_url(home_url('/tentang-kami')); ?>" class="inline-block px-6 py-3 bg-lm-blue text-white text-base font-medium rounded-md hover:bg-lm-accent transition-colors duration-300 shadow-sm">
+            <a href="<?php echo esc_url(home_url('/about')); ?>" class="inline-block px-6 py-3 bg-lm-blue text-white text-base font-medium rounded-md hover:bg-lm-accent transition-colors duration-300 shadow-sm">
                 Temukan Lebih Lanjut Tentang Kami
             </a>
         </div>
