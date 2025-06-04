@@ -15,63 +15,63 @@ $services = array(
         'title' => 'TRAINING DAN SERTIFIKASI BNSP',
         'description' => 'Program sertifikasi resmi BNSP untuk meningkatkan kompetensi di bidang laboratorium',
         'image' => get_stylesheet_directory_uri() . '/assets/images/training-sertifikasi-bnsp.webp',
-        'url' => home_url('/layanan/sertifikasi-bnsp'),
+        'url' => home_url('/training-dan-sertifikasi-bnsp'),
     ),
     array(
         'title' => 'WORKSHOP',
         'description' => 'Workshop praktis untuk mengembangkan keterampilan laboratorium',
         'image' => get_stylesheet_directory_uri() . '/assets/images/workshop.webp',
-        'url' => home_url('/layanan/workshop'),
+        'url' => home_url('/workshop'),
     ),
     array(
         'title' => 'WORKSHOP BERBASIS KOMPETENSI',
         'description' => 'Workshop intensif berfokus pada pengembangan kompetensi spesifik',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/workshop-kompetensi.jpg',
-        'url' => home_url('/layanan/workshop-kompetensi'),
+        'image' => get_stylesheet_directory_uri() . '/assets/images/workshop-berbasis-kompetensi.webp',
+        'url' => home_url('/workshop'),
     ),
     array(
         'title' => 'PUBLIC TRAINING',
         'description' => 'Pelatihan terbuka untuk umum dengan jadwal tetap',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/public-training.jpg',
-        'url' => home_url('/layanan/public-training'),
+        'image' => get_stylesheet_directory_uri() . '/assets/images/public-training.webp',
+        'url' => home_url('/public-training'),
     ),
     array(
         'title' => 'HANDS ON TRAINING',
         'description' => 'Pelatihan dengan pendekatan praktek langsung untuk pengalaman belajar optimal',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/hands-on-training.jpg',
-        'url' => home_url('/layanan/hands-on-training'),
+        'image' => get_stylesheet_directory_uri() . '/assets/images/hands-on-training.webp',
+        'url' => home_url('/jadwal-hands-on-training'),
     ),
     array(
         'title' => 'TRAINING DARING',
         'description' => 'Pelatihan virtual yang dapat diakses dari mana saja',
         'image' => get_stylesheet_directory_uri() . '/assets/images/training-daring.webp',
-        'url' => home_url('/layanan/training-daring'),
+        'url' => home_url('/jadwal-training-online-webinar'),
     ),
     array(
         'title' => 'E-COURSE',
         'description' => 'Pembelajaran mandiri melalui platform digital dengan akses fleksibel',
         'image' => get_stylesheet_directory_uri() . '/assets/images/ecourse.webp',
-        'url' => home_url('/layanan/e-course'),
+        'url' => 'https://labmaniaindonesia.myr.id/',
     ),
     array(
         'title' => 'TRAINING LURING',
         'description' => 'Pelatihan tatap muka dengan interaksi langsung bersama instruktur ahli',
-        'image' => get_stylesheet_directory_uri() . '/assets/images/services/training-luring.jpg',
-        'url' => home_url('/layanan/training-luring'),
+        'image' => get_stylesheet_directory_uri() . '/assets/images/training-luring.webp',
+        'url' => home_url('/workshop-private'),
     ),
 );
 
 // CTA Buttons for download with descriptive labels for accessibility
 $cta_buttons = array(
     array(
-        'text' => 'JADWAL PELATIHAN 2024',
-        'url' => home_url('/download/jadwal-2024'),
-        'description' => 'Unduh jadwal lengkap pelatihan tahun 2024',
+        'text' => 'JADWAL PELATIHAN 2025',
+        'url' => 'https://drive.google.com/file/d/1c3a7a479yPtsQ8o5uQBqMgsNR9f6nOZa/view?usp=sharing',
+        'description' => 'Unduh jadwal lengkap pelatihan tahun 2025',
     ),
     array(
-        'text' => 'JADWAL PELATIHAN 2025',
-        'url' => home_url('/download/jadwal-2025'),
-        'description' => 'Unduh jadwal lengkap pelatihan tahun 2025',
+        'text' => 'JADWAL PELATIHAN 2026',
+        'url' => 'https://api.whatsapp.com/send/?phone=6282124293839&text=Saya+ingin+info+Jadwal+Training+dan+Sertifikasi+Tahun+2026&type=phone_number&app_absent=0',
+        'description' => 'Unduh jadwal lengkap pelatihan tahun 2026',
     ),
 );
 
