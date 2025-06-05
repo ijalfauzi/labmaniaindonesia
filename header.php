@@ -2,8 +2,6 @@
 /**
  * The header for our theme
  *
- * This is the template that displays all of the <head> section and everything up until <div id="content">
- *
  * @package Labmania_Indonesia
  */
 
@@ -11,131 +9,154 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="scroll-smooth">
 <head>
-    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="profile" href="https://gmpg.org/xfn/11">
+    <script src="https://unpkg.com/alpinejs" defer></script>
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class('bg-gray-100'); ?>>
+<body <?php body_class('bg-gray-100'); ?> x-data="{ mobileMenuOpen: false }">
 <?php wp_body_open(); ?>
 <div id="page" class="site">
-    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'labmania-indonesia' ); ?></a>
+    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'labmania-indonesia'); ?></a>
 
     <header id="masthead" class="site-header sticky top-0 z-50 bg-gradient-to-r from-blue-900 to-blue-950 backdrop-blur-md shadow-lg transition-all duration-300">
         <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between py-4 md:py-5">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <?php if ( has_custom_logo() ) : ?>
+                    <?php if (has_custom_logo()) : ?>
                         <div class="site-logo transition-transform duration-300 hover:scale-105">
-                            <?php 
-                            // Get the custom logo URL and alt text
+                            <?php
                             $custom_logo_id = get_theme_mod('custom_logo');
                             $logo = wp_get_attachment_image_src($custom_logo_id, 'full');
                             $logo_alt = get_post_meta($custom_logo_id, '_wp_attachment_image_alt', true);
-                            
-                            if ($logo) :
-                            ?>
+                            if ($logo) : ?>
                                 <a href="<?php echo esc_url(home_url('/')); ?>" rel="home">
-                                    <img src="<?php echo esc_url($logo[0]); ?>" 
-                                         alt="<?php echo esc_attr($logo_alt ? $logo_alt : get_bloginfo('name')); ?>" 
-                                         class="h-12 w-auto md:h-14 lg:h-16">
+                                    <img src="<?php echo esc_url($logo[0]); ?>"
+                                         alt="<?php echo esc_attr($logo_alt ? $logo_alt : get_bloginfo('name')); ?>"
+                                         class="h-10 w-auto md:h-12 rounded-md">
                                 </a>
                             <?php endif; ?>
                         </div>
                     <?php else : ?>
                         <div class="text-xl font-bold">
                             <a href="<?php echo esc_url(home_url('/')); ?>" rel="home" class="text-white hover:text-lm-yellow transition-colors duration-300">
-                                <?php echo esc_html( bloginfo('name') ); ?>
+                                <?php echo esc_html(bloginfo('name')); ?>
                             </a>
                         </div>
                     <?php endif; ?>
                 </div>
-                
-                <!-- Mobile Nav Toggle Button -->
-                <div class="flex md:hidden">
-                    <button type="button" id="mobile-menu-toggle" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-lm-yellow hover:bg-blue-800/50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-lm-yellow" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <!-- Icon when menu is closed -->
-                        <svg id="menu-closed-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <!-- Icon when menu is open -->
-                        <svg id="menu-open-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+
+                <!-- Toggle Button -->
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-white focus:outline-none">
+                        <template x-if="!mobileMenuOpen">
+                            <svg class="h-6 w-6 text-lm-yellow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </template>
+                        <template x-if="mobileMenuOpen">
+                            <svg class="h-6 w-6 text-lm-yellow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </template>
                     </button>
                 </div>
 
                 <!-- Desktop Navigation -->
-                <nav id="desktop-navigation" class="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="text-white hover:text-lm-yellow font-medium relative group">
-                        Home
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-lm-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-bottom-left"></span>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/about')); ?>" class="text-white hover:text-lm-yellow font-medium relative group">
-                        About
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-lm-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-bottom-left"></span>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/services')); ?>" class="text-white hover:text-lm-yellow font-medium relative group">
-                        Services
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-lm-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-bottom-left"></span>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/products')); ?>" class="text-white hover:text-lm-yellow font-medium relative group">
-                        Products
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-lm-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-bottom-left"></span>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/blog')); ?>" class="text-white hover:text-lm-yellow font-medium relative group">
-                        Blog
-                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-lm-yellow transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-bottom-left"></span>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/contact')); ?>" class="ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-blue-900 bg-lm-yellow hover:bg-lm-yellow-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lm-yellow transition-all duration-300 transform hover:scale-105">
-                        Contact Us
-                    </a>
+                <nav class="hidden md:flex items-center gap-4" aria-label="Main Menu">
+                    <?php wp_nav_menu([
+                        'theme_location' => 'primary',
+                        'container' => false,
+                        'menu_class' => 'flex items-center',
+                        'fallback_cb' => false,
+                        'walker' => new class extends Walker_Nav_Menu {
+                            function start_lvl(&$output, $depth = 0, $args = null) {
+                                $output .= '<ul x-show="open" x-transition class="absolute left-0 mt-6 w-80 rounded-bl-md rounded-br-md shadow-lg bg-blue-950 py-2 z-50 px-2 text-sm space-y-1">';
+                            }
+                            function end_lvl(&$output, $depth = 0, $args = null) {
+                                $output .= '</ul>';
+                            }
+                            function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+                                $title = esc_html($item->title);
+                                $url = esc_url($item->url);
+                                $classes = implode(' ', $item->classes);
+                                $is_active = strpos($classes, 'current-menu-item') !== false || strpos($classes, 'current_page_ancestor') !== false;
+                                $has_children = strpos($classes, 'menu-item-has-children') !== false;
+
+                                $link_classes = 'relative text-white hover:text-lm-yellow font-medium transition-colors duration-300 px-3 py-2 inline-block';
+                                if ($is_active) $link_classes .= ' text-lm-yellow';
+                                if (strtolower($title) === 'contact us') {
+                                    $link_classes = 'ml-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-blue-900 bg-lm-yellow hover:bg-lm-yellow-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lm-yellow transition-all duration-300 transform hover:scale-105';
+                                }
+
+                                $output .= '<li class="relative group" x-data="{ open: false }">';
+                                if ($has_children) {
+                                    $output .= '<div class="flex items-center">';
+                                    $output .= '<a href="' . $url . '" class="' . esc_attr($link_classes) . '">' . $title . '</a>';
+                                    $output .= '<button @click.prevent="open = !open" class="text-white hover:text-lm-yellow transition p-2 -m-2"><svg :class="{\'rotate-180\': open}" class="h-3 w-3 transform transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></button>';
+                                    $output .= '</div>';
+                                } else {
+                                    $output .= '<a href="' . $url . '" class="' . esc_attr($link_classes) . '">' . $title . '</a>';
+                                }
+                            }
+                            function end_el(&$output, $item, $depth = 0, $args = null) {
+                                $output .= '</li>';
+                            }
+                        }
+                    ]); ?>
                 </nav>
             </div>
-            
-            <!-- Mobile Navigation Menu -->
-            <div id="mobile-menu" class="hidden md:hidden">
-                <div class="pt-2 pb-4 space-y-1 border-t border-blue-800">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-lm-yellow hover:bg-blue-800/30 transition duration-300">Home</a>
-                    <a href="<?php echo esc_url(home_url('/about')); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-lm-yellow hover:bg-blue-800/30 transition duration-300">About</a>
-                    <a href="<?php echo esc_url(home_url('/services')); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-lm-yellow hover:bg-blue-800/30 transition duration-300">Services</a>
-                    <a href="<?php echo esc_url(home_url('/products')); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-lm-yellow hover:bg-blue-800/30 transition duration-300">Products</a>
-                    <a href="<?php echo esc_url(home_url('/blog')); ?>" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-lm-yellow hover:bg-blue-800/30 transition duration-300">Blog</a>
-                    <a href="<?php echo esc_url(home_url('/contact')); ?>" class="block px-3 py-2 rounded-md text-base font-medium bg-blue-800/50 text-lm-yellow hover:bg-blue-800/70 transition duration-300">Contact Us</a>
-                </div>
+        </div>
+
+        <!-- Fullscreen Mobile Menu -->
+        <div x-show="mobileMenuOpen" x-transition class="absolute left-0 right-0 z-50 bg-gradient-to-r from-blue-900 to-blue-950 text-white md:hidden overflow-y-auto">
+            <div class="px-6 py-12 relative border-b-4 border-lm-yellow-light">
+                <ul class="space-y-2">
+                    <?php
+                    wp_nav_menu([
+                        'theme_location' => 'primary',
+                        'container' => false,
+                        'items_wrap' => '%3$s',
+                        'fallback_cb' => false,
+                        'walker' => new class extends Walker_Nav_Menu {
+                            function start_lvl(&$output, $depth = 0, $args = null) {
+                                $output .= '<ul x-show="open" x-transition class="pl-4 mt-1 space-y-1 border-l border-lm-yellow">';
+                            }
+                            function end_lvl(&$output, $depth = 0, $args = null) {
+                                $output .= '</ul>';
+                            }
+                            function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+                                $title = esc_html($item->title);
+                                $url = esc_url($item->url);
+                                $classes = implode(' ', $item->classes);
+                                $is_active = strpos($classes, 'current-menu-item') !== false || strpos($classes, 'current_page_ancestor') !== false;
+                                $has_children = strpos($classes, 'menu-item-has-children') !== false;
+
+                                $link_classes = 'block font-medium text-sm px-4 py-2 rounded hover:bg-blue-800/50 transition';
+                                if ($is_active) $link_classes .= ' text-lm-yellow';
+
+                                $output .= '<li x-data="{ open: false }">';
+                                if ($has_children) {
+                                    $output .= '<div class="flex items-center justify-between">';
+                                    $output .= '<a href="' . $url . '" class="' . esc_attr($link_classes) . '">' . $title . '</a>';
+                                    $output .= '<button @click.prevent="open = !open" class="text-lm-yellow px-3 py-2 -my-2 -mx-3"><svg :class="{\'rotate-180\': open}" class="h-3 w-3 transform transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg></button>';
+                                    $output .= '</div>';
+                                } else {
+                                    $output .= '<a href="' . $url . '" class="' . esc_attr($link_classes) . '">' . $title . '</a>';
+                                }
+                            }
+                            function end_el(&$output, $item, $depth = 0, $args = null) {
+                                $output .= '</li>';
+                            }
+                        }
+                    ]);
+                    ?>
+                </ul>
             </div>
         </div>
-    </header><!-- #masthead -->
+    </header>
 
     <div id="content" class="site-content">
-    
-    <script>
-        // Mobile menu toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuClosedIcon = document.getElementById('menu-closed-icon');
-            const menuOpenIcon = document.getElementById('menu-open-icon');
-            
-            mobileMenuToggle.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-                menuClosedIcon.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden');
-            });
-            
-            // Add scroll event to change header appearance on scroll
-            const header = document.getElementById('masthead');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 10) {
-                    header.classList.add('shadow-xl');
-                    header.classList.remove('shadow-lg');
-                } else {
-                    header.classList.remove('shadow-xl');
-                    header.classList.add('shadow-lg');
-                }
-            });
-        });
-    </script>
