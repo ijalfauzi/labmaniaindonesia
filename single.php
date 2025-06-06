@@ -25,7 +25,7 @@ get_header();
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
 
                     <!-- Main Content -->
-                    <article class="lg:col-span-3 prose lg:prose-lg max-w-none content-style">
+                    <article class="lg:col-span-3">
 
                         <!-- Post Meta with vertical dividers only -->
                         <div class="mb-10">
@@ -33,7 +33,7 @@ get_header();
 
                                 <!-- Author -->
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-lm-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5.121 17.804A10.97 10.97 0 0112 15c2.042 0 3.937.612 5.507 1.652M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
@@ -45,7 +45,7 @@ get_header();
 
                                 <!-- Date -->
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-lm-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8 7V3m8 4V3M4 11h16M5 20h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v11a2 2 0 002 2z"/>
                                     </svg>
@@ -57,7 +57,7 @@ get_header();
 
                                 <!-- Reading Time -->
                                 <div class="flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4 text-lm-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
@@ -67,7 +67,10 @@ get_header();
                             </div>
                         </div>
 
-                        <?php the_content(); ?>
+                        <div class="prose max-w-none content-style">
+                            <?php the_content(); ?>
+                        </div>
+                        
 
                         <!-- Multi-page support -->
                         <?php
@@ -103,7 +106,7 @@ get_header();
                                                 </div>
                                             <?php endif; ?>
                                             <div class="p-4">
-                                                <h3 class="font-semibold text-blue-900 group-hover:text-lm-yellow text-base leading-snug mb-1"><?php the_title(); ?></h3>
+                                                <h3 class="font-semibold text-blue-900 group-hover:text-blue-900 text-base leading-snug mb-1"><?php the_title(); ?></h3>
                                             </div>
                                         </a>
                                     <?php endwhile; wp_reset_postdata(); ?>
@@ -114,13 +117,31 @@ get_header();
                         <!-- Post Pagination -->
                         <nav class="mt-16 pt-10 border-t border-gray-200 flex flex-col md:flex-row justify-between gap-6 text-sm font-medium">
                             <div>
-                                <?php previous_post_link('%link', '← %title'); ?>
+                                <?php
+                                $prev_link = get_previous_post_link(
+                                    '%link',
+                                    '← %title'
+                                );
+                                if ($prev_link) {
+                                    // Add Tailwind classes to <a> tag
+                                    echo str_replace('<a ', '<a class="text-lm-blue hover:text-blue-800 transition-colors" ', $prev_link);
+                                }
+                                ?>
                             </div>
                             <div class="text-right">
-                                <?php next_post_link('%link', '%title →'); ?>
+                                <?php
+                                $next_link = get_next_post_link(
+                                    '%link',
+                                    '%title →'
+                                );
+                                if ($next_link) {
+                                    // Add Tailwind classes to <a> tag
+                                    echo str_replace('<a ', '<a class="text-lm-blue hover:text-blue-800 transition-colors" ', $next_link);
+                                }
+                                ?>
                             </div>
                         </nav>
-
+                        
                         <!-- Comments -->
                         <?php
                         if (comments_open() || get_comments_number()) {
