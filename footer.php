@@ -24,7 +24,9 @@
                 <div class="mb-6 flex flex-col items-center md:items-start text-center md:text-left">
                     <?php if (has_custom_logo()) : ?>
                         <div class="footer-logo mb-4 transform hover:scale-105 transition duration-300">
-                            <?php the_custom_logo(); ?>
+                            <?php
+                                echo str_replace('<img', '<img class="rounded-md"', get_custom_logo());
+                            ?>
                         </div>
                     <?php else : ?>
                         <h3 class="text-2xl font-bold mb-4 text-lm-yellow inline-block relative group">
@@ -34,7 +36,7 @@
                     <?php endif; ?>
                     
                     <p class="text-sm mb-5 text-gray-200 max-w-xs">
-                        Labmania Indonesia provides premium laboratory equipment and solutions for research facilities, educational institutions, and industrial laboratories.
+                        LabMania Indonesia dibawah naungan PT LabMania Indonesia adalah Lembaga Training yang sedang menerapkan SNI 29993:2017, Layanan pembelajar di luar pendidikan formal dibawah bimbingan Badan Standardisasi Nasional (BSN).
                     </p>
                     
                     <!-- Social Media Links -->
@@ -133,20 +135,20 @@
                 <address class="not-italic">
                     <ul class="space-y-5">
                         <li>
-                            <div class="flex items-start group">
+                            <a href="https://maps.app.goo.gl/MRb4DiqGhhNGrP3E6" target="_blank" rel="noopener" class="flex items-start group">
                                 <div class="bg-gradient-to-br from-blue-800 to-blue-900 p-3 rounded-lg mr-4 shadow-lg group-hover:from-lm-yellow group-hover:to-lm-yellow-light group-hover:text-blue-900 transition-all duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                     </svg>
                                 </div>
-                                <div class="text-sm leading-relaxed text-gray-200">
+                                <div class="text-sm leading-relaxed text-gray-200 group-hover:text-lm-yellow transition duration-300">
                                     Jalan Boulevard Selatan, Ruby Commercial<br> 
                                     No TC25 Summarecon Bekasi,<br>
                                     RT.003/RW.005, Marga Mulya,<br>
                                     Bekasi Utara, Bekasi, West Java 17143
                                 </div>
-                            </div>
+                            </a>
                         </li>
                         <li>
                             <a href="tel:+6282124293839" class="flex items-center group">
@@ -177,11 +179,13 @@
 
         <!-- Bottom Footer -->
         <div class="mt-12 pt-8 border-t border-blue-800/50">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="copyright text-sm text-gray-300 mb-4 md:mb-0">
-                    &copy; <?php echo date('Y'); ?> <span class="font-semibold"><?php echo esc_html( bloginfo('name') ); ?></span>. All rights reserved. Developed by <a href="https://wizepress.id" title="The Wize Way to WordPress" target="_blank" rel="noopener noreferrer" class="text-lm-yellow hover:text-lm-yellow-light transition duration-300">WizePress</a>.
+            <div class="flex flex-col-reverse md:flex-row md:justify-between md:items-center gap-4">
+                <div class="text-sm text-gray-300 text-center md:text-left">
+                    &copy; <?php echo date('Y'); ?> <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-lm-yellow transition duration-300"><?php echo esc_html( get_bloginfo('name') ); ?></a>. All rights reserved.
+                    <br class="md:hidden">
+                    Developed by <a href="https://wizepress.id" target="_blank" title="The Wize Way to WordPress" class="hover:text-lm-yellow transition duration-300">WizePress</a>.
                 </div>
-                <div class="flex items-center space-x-6 text-sm text-gray-300">
+                <div class="flex justify-center md:justify-end items-center space-x-6 text-sm text-gray-300">
                     <a href="<?php echo esc_url(home_url('/privacy-policy')); ?>" class="hover:text-lm-yellow transition duration-300">Privacy Policy</a>
                     <a href="<?php echo esc_url(home_url('/terms-of-service')); ?>" class="hover:text-lm-yellow transition duration-300">Terms of Service</a>
                 </div>
@@ -195,6 +199,9 @@
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
+<?php
+echo do_shortcode('[floating_buttons]');
+?>
 
 </body>
 </html>
