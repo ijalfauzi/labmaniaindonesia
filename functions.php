@@ -7,21 +7,28 @@
 
 defined('ABSPATH') || exit;
 
-// Define theme constants
-define('LABMANIA_VERSION', wp_get_theme()->get('Version'));
-define('LABMANIA_URI', get_template_directory_uri());
-define('LABMANIA_PATH', get_template_directory());
-
 /**
  * Enqueue compiled theme assets
  */
 function labmania_enqueue_assets() {
+    $theme_uri  = get_template_directory_uri();
+    $theme_path = get_template_directory();
+
     // Main CSS (Webpack output)
     wp_enqueue_style(
         'labmania-style',
-        LABMANIA_URI . '/dist/bundle.css',
+        $theme_uri . '/dist/bundle.css',
         [],
-        LABMANIA_VERSION
+        filemtime($theme_path . '/dist/bundle.css')
+    );
+
+    // JS bundle from Webpack (global)
+    wp_enqueue_script(
+        'labmania-bundle',
+        $theme_uri . '/dist/bundle.js',
+        [],
+        filemtime($theme_path . '/dist/bundle.js'),
+        true
     );
 
     // Google Fonts
@@ -32,30 +39,18 @@ function labmania_enqueue_assets() {
         null
     );
 
-    // Only enqueue Swiper on front page
-    if (is_front_page()) {
-        wp_enqueue_style(
-            'swiper-css',
-            'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css',
-            [],
-            '9.0.0'
-        );
-
-        wp_enqueue_script(
-            'swiper-js',
-            'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js',
-            [],
-            '9.0.0',
-            true
-        );
-    }
-
-    // JS bundle from Webpack
-    wp_enqueue_script(
-        'labmania-bundle',
-        LABMANIA_URI . '/dist/bundle.js',
+    // Swiper (now loaded globally)
+    wp_enqueue_style(
+        'swiper-css',
+        'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css',
         [],
-        LABMANIA_VERSION,
+        '9.0.0'
+    );
+    wp_enqueue_script(
+        'swiper-js',
+        'https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js',
+        [],
+        '9.0.0',
         true
     );
 }
@@ -91,7 +86,6 @@ register_nav_menus([
     'primary' => __('Primary Menu', 'labmania'),
 ]);
 
-
 /**
  * Utility: Estimated Reading Time
  */
@@ -119,22 +113,12 @@ function labmania_cleanup_wp_head() {
 }
 add_action('init', 'labmania_cleanup_wp_head');
 
-// Remove version query strings from static files
+// Remove version query strings from static files (optional, for production)
 function labmania_remove_version_query($src) {
     return remove_query_arg('ver', $src);
 }
 add_filter('style_loader_src', 'labmania_remove_version_query', 9999);
 add_filter('script_loader_src', 'labmania_remove_version_query', 9999);
-
-// Lazy load all content images
-function labmania_force_lazyload_images($content) {
-    return preg_replace(
-        '/<img(?![^>]+loading=)[^>]+>/i',
-        '$0 loading="lazy"',
-        $content
-    );
-}
-add_filter('the_content', 'labmania_force_lazyload_images');
 
 // Limit post revisions
 if (!defined('WP_POST_REVISIONS')) {

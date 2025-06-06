@@ -190,7 +190,7 @@
         <div class="mt-12 pt-8 border-t border-blue-800/50">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="copyright text-sm text-gray-300 mb-4 md:mb-0">
-                    &copy; <?php echo date('Y'); ?> <span class="font-semibold"><?php echo esc_html( bloginfo('name') ); ?></span>. All rights reserved.
+                    &copy; <?php echo date('Y'); ?> <span class="font-semibold"><?php echo esc_html( bloginfo('name') ); ?></span>. All rights reserved. Developed by <a href="https://wizepress.id" title="The Wize Way to WordPress" target="_blank" rel="noopener noreferrer" class="text-lm-yellow hover:text-lm-yellow-light transition duration-300">WizePress</a>.
                 </div>
                 <div class="flex items-center space-x-6 text-sm text-gray-300">
                     <a href="<?php echo esc_url(home_url('/privacy-policy')); ?>" class="hover:text-lm-yellow transition duration-300">Privacy Policy</a>

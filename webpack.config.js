@@ -1,5 +1,6 @@
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
   entry: './src/js/main.js',
@@ -11,21 +12,23 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+        ],
       },
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'bundle.css',
+    }),
     new BrowserSyncPlugin({
-      host: 'localhost',
-      port: 3000,
       proxy: 'http://labmaniaindonesia.test',
+      files: ['**/*.php', 'dist/*.js', 'dist/*.css'],
       notify: false,
-      files: [
-        './**/*.php',
-        './dist/*.js',
-        './dist/*.css'
-      ],
-    })
+      open: false,
+    }),
   ],
 };
