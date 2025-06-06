@@ -22,8 +22,12 @@ if (post_password_required()) return;
                 'avatar_size'=> 48,
                 'callback'   => function ($comment, $args, $depth) {
                     $tag = ($args['style'] === 'div') ? 'div' : 'li';
+                    $classes = 'flex items-start gap-4 text-sm';
+                    if ($depth > 1) {
+                        $classes .= ' ps-16';
+                    }
                     ?>
-                    <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class('flex items-start gap-4 text-sm'); ?>>
+                    <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class($classes); ?>>
                         <div class="flex-shrink-0">
                             <?php echo get_avatar($comment, 48, '', '', ['class' => 'rounded-full shadow-sm']); ?>
                         </div>
@@ -39,9 +43,9 @@ if (post_password_required()) return;
                                 <?php comment_reply_link(array_merge($args, [
                                     'reply_text' => 'Balas',
                                     'depth' => $depth,
-                                    'max_depth' => $args['max_depth'],
-                                    'before' => '<span class="text-blue-900 hover:text-lm-yellow">',
-                                    'after'  => '</span>'
+                                    'max_depth' => 2,
+                                    'before' => '<span class="text-blue-900 hover:text-blue-900 italic">',
+                                    'after'  => '</span>',
                                 ])); ?>
                             </div>
                         </div>
@@ -69,7 +73,10 @@ if (post_password_required()) return;
             $aria_req = ($req ? " aria-required='true'" : '');
 
             comment_form([
-                'title_reply'          => '',
+                'title_reply' => '',
+                'title_reply_before' => '<span class="text-xs text-gray-500">',
+                'title_reply_after' => '</span>',
+
                 'comment_notes_before' => '',
                 'logged_in_as' => '<div class="text-xs text-gray-500 mb-4">' . sprintf(
                     __('Masuk sebagai <a href="%1$s" class="underline text-blue-800">%2$s</a>. <a href="%3$s" class="text-blue-900 hover:text-lm-blue">Keluar?</a>'),
