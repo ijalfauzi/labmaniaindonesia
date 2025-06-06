@@ -23,6 +23,7 @@
     "webpack-stream": "^7.0.0"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "autoprefixer": "^10.4.20"
   }
 }
